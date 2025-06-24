@@ -11,9 +11,108 @@
   <link rel="stylesheet" href="./style.css">
   <script src='https://cdn.tailwindcss.com/3.2.0' ></script>
   <script src="./tailwind.config.js"></script>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <style>
    * {
        font-family: 'IBM Plex Sans', sans-serif !important;
+   }
+   
+   /* Swiper Cover Flow Styles */
+   .video-swiper {
+     padding: 50px 0;
+     max-width: 1200px;
+     margin: 0 auto;
+     overflow: hidden;
+   }
+   
+   .video-swiper .swiper-wrapper {
+     display: flex;
+     align-items: center;
+   }
+   
+   .video-swiper .swiper-slide {
+     width: 360px;
+     height: 480px;
+   }
+   
+   .video-swiper .swiper-slide > div {
+     width: 100%;
+     height: 100%;
+     backface-visibility: hidden;
+     -webkit-backface-visibility: hidden;
+     transform-style: preserve-3d;
+     -webkit-transform-style: preserve-3d;
+   }
+   
+   /* Center slide - no scaling on inner content */
+   .video-swiper .swiper-slide-active > div {
+     transform: scale(1) translate3d(0, 0, 0);
+     -webkit-transform: scale(1) translate3d(0, 0, 0);
+   }
+   
+   /* Side slides - scale the container only */
+   .video-swiper .swiper-slide-prev,
+   .video-swiper .swiper-slide-next {
+     transform: scale(0.8);
+     -webkit-transform: scale(0.8);
+   }
+   
+   /* Standardize all video text sizes */
+   .video-swiper .swiper-slide .text-\\[\\#ffffff\\] {
+     font-size: 20px !important;
+     line-height: 1.4 !important;
+   }
+   
+   /* Ensure consistent sizing by preventing inheritance of scale transform */
+   .video-swiper .swiper-slide > div > div:last-child {
+     font-size: 20px !important;
+     line-height: 1.4 !important;
+   }
+   
+   /* Add cursor pointer to clickable slides */
+   .video-swiper .swiper-slide {
+     cursor: pointer;
+   }
+   
+   /* Center slide should be in front */
+   .video-swiper .swiper-slide-active {
+     z-index: 10;
+   }
+   
+   /* Side slides behind center */
+   .video-swiper .swiper-slide-prev,
+   .video-swiper .swiper-slide-next {
+     z-index: 1;
+   }
+   
+   /* Keep far slides rendered but hidden behind */
+   .video-swiper .swiper-slide-prev-prev,
+   .video-swiper .swiper-slide-next-next {
+     opacity: 0;
+     pointer-events: none;
+     z-index: -1;
+     transform: scale(0.6) translate3d(0, 0, 0);
+     -webkit-transform: scale(0.6) translate3d(0, 0, 0);
+   }
+   
+   /* Prevent layout shifts */
+   .video-swiper {
+     transform: translateZ(0);
+     -webkit-transform: translateZ(0);
+   }
+   
+   /* Remove CSS transitions - let Swiper handle them */
+   .video-swiper .swiper-slide {
+     will-change: transform;
+   }
+   
+   /* Custom navigation button styles */
+   .video-prev:hover,
+   .video-next:hover {
+     transform: translateY(-50%);
    }
    
    a,
@@ -1339,26 +1438,14 @@
         <br />
         and the latest industry news.
       </div>
-      <div class="shrink-0 w-[1280px] h-[479.69px] static relative" id="video-carousel">
-        <!-- Left Arrow -->
-        <button id="video-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white rounded-full p-4 transition-all duration-300 shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-8 h-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
-        </button>
-        
-        <!-- Right Arrow -->
-        <button id="video-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white rounded-full p-4 transition-all duration-300 shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-8 h-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
-        
-        <!-- Video Container -->
-        <div class="video-container relative w-full h-full overflow-hidden">
-          <div class="video-track flex items-center justify-center h-full relative" style="transition: transform 0.5s ease-in-out;">
-        <div
-          class="video-item rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-[255.04px] h-[340.79px] absolute" data-index="0"
+      <div class="shrink-0 w-[1280px] h-[600px] relative">
+        <!-- Swiper Container -->
+        <div class="swiper video-swiper h-full">
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <div
+                class="rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-full h-full"
           style="
             background: linear-gradient(
               180deg,
@@ -1381,13 +1468,16 @@
             />
           </div>
           <div
-            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[17.05035972595215px] leading-[133.3%] font-normal relative self-stretch"
+            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20px] leading-[1.4] font-normal relative self-stretch"
           >
             We help businesses go green and stay compliant.
           </div>
-        </div>
-        <div
-          class="video-item rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-[255.04px] h-[340.79px] absolute" data-index="1"
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <div
+                class="rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-full h-full"
           style="
             background: linear-gradient(
               180deg,
@@ -1410,13 +1500,16 @@
             />
           </div>
           <div
-            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[17.05035972595215px] leading-[133.3%] font-normal relative self-stretch"
+            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20px] leading-[1.4] font-normal relative self-stretch"
           >
             We help businesses go green and stay compliant.
           </div>
-        </div>
-        <div
-          class="video-item rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-[303.8px] h-[405.94px] absolute" data-index="2"
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <div
+                class="rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-full h-full"
           style="
             background: linear-gradient(
               180deg,
@@ -1439,13 +1532,16 @@
             />
           </div>
           <div
-            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20.310081481933594px] leading-[133.3%] font-normal relative self-stretch"
+            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20px] leading-[1.4] font-normal relative self-stretch"
           >
             We help businesses go green and stay compliant.
           </div>
-        </div>
-        <div
-          class="video-item rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-[303.8px] h-[405.94px] absolute" data-index="3"
+              </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="swiper-slide">
+              <div
+                class="rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-full h-full"
           style="
             background: linear-gradient(
               180deg,
@@ -1468,13 +1564,16 @@
             />
           </div>
           <div
-            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20.310081481933594px] leading-[133.3%] font-normal relative self-stretch"
+            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20px] leading-[1.4] font-normal relative self-stretch"
           >
             We help businesses go green and stay compliant.
           </div>
-        </div>
-        <div
-          class="video-item rounded-lg p-8 flex flex-col items-center justify-between w-[359px] h-[479.69px] absolute" data-index="4"
+              </div>
+            </div>
+            <!-- Slide 5 -->
+            <div class="swiper-slide">
+              <div
+                class="rounded-lg p-8 flex flex-col items-center justify-between w-full h-full"
           style="
             background: linear-gradient(
               180deg,
@@ -1495,14 +1594,54 @@
             />
           </div>
           <div
-            class="text-[#ffffff] text-left font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
+            class="text-[#ffffff] text-left font-['IbmPlexSans-Regular',_sans-serif] text-[20px] leading-[1.4] font-normal relative self-stretch"
           >
-            We help businesses go green and stay compliant.
+                We help businesses go green and stay compliant.
+              </div>
+              </div>
+            </div>
           </div>
+          <!-- Custom Navigation buttons -->
+          <button class="video-prev absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-black">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button class="video-next absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-black">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
         </div>
+      </div>
+      
+      <!-- Video Modal -->
+      <div id="videoModal" class="fixed inset-0 z-50 hidden">
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-90" id="modalOverlay"></div>
+        
+        <!-- Modal content -->
+        <div class="relative w-full h-full flex items-center justify-center p-8">
+          <!-- Close button -->
+          <button id="closeModal" class="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          
+          <!-- Video placeholder -->
+          <div class="bg-gray-800 rounded-lg w-full max-w-4xl aspect-video flex items-center justify-center">
+            <div class="text-white text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 mx-auto mb-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+              </svg>
+              <p class="text-xl">Video Player Placeholder</p>
+              <p class="text-sm text-gray-400 mt-2">Click anywhere outside or press ESC to close</p>
+            </div>
           </div>
         </div>
       </div>
+      
       <div
         class="bg-button-primary rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[142px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
       >
@@ -2924,110 +3063,174 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, { threshold: 0.2 });
   
-  // Observe licensing section elements
-  document.querySelectorAll('.licensing-fade-row').forEach(el => {
-    licensingObserver.observe(el);
-  });
-  
-  document.querySelectorAll('.licensing-number').forEach(el => {
-    licensingObserver.observe(el);
-  });
+  // Observe licensing section elements - ensure DOM is ready
+  setTimeout(() => {
+    document.querySelectorAll('.licensing-fade-row').forEach(el => {
+      licensingObserver.observe(el);
+    });
+    
+    document.querySelectorAll('.licensing-number').forEach(el => {
+      licensingObserver.observe(el);
+    });
+  }, 100); // Small delay to ensure all elements are rendered
 });
 
-// Video Carousel Functionality
+// Video Carousel with Swiper Cover Flow
 document.addEventListener('DOMContentLoaded', function() {
-  const carousel = document.getElementById('video-carousel');
-  const videoItems = carousel.querySelectorAll('.video-item');
-  const prevButton = document.getElementById('video-prev');
-  const nextButton = document.getElementById('video-next');
+  const videoSwiper = new Swiper('.video-swiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    initialSlide: 2, // Start with middle slide
+    watchSlidesProgress: true,
+    watchSlidesVisibility: true,
+    coverflowEffect: {
+      rotate: 45,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: false,
+    },
+    speed: 800, // Slightly slower for smoother transitions
+    cssMode: false,
+    allowTouchMove: true,
+    preloadImages: true,
+    updateOnImagesReady: true,
+    navigation: {
+      nextEl: '.video-next',
+      prevEl: '.video-prev',
+    },
+    keyboard: {
+      enabled: true,
+    },
+    loop: true,
+    loopedSlides: 5,
+    speed: 600, // Smooth transition speed
+    slideToClickedSlide: true, // Enable clicking on slides to center them
+    breakpoints: {
+      640: {
+        slidesPerView: 1,
+      },
+      768: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+    },
+  });
   
-  let currentIndex = 2; // Start with the middle video (index 2)
-  const totalVideos = videoItems.length;
+  // Video Modal Functionality
+  const videoModal = document.getElementById('videoModal');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const closeModalBtn = document.getElementById('closeModal');
+  const videoSlides = document.querySelectorAll('.video-swiper .swiper-slide');
   
-  // Video positions configuration - horizontal centering with overlapping
-  const positions = [
-    { scale: 0.7, x: -380, y: 0, zIndex: 1 }, // Far left (smallest)
-    { scale: 0.85, x: -200, y: 0, zIndex: 2 }, // Left (small)
-    { scale: 1, x: 0, y: 0, zIndex: 5 }, // Center (biggest)
-    { scale: 0.85, x: 200, y: 0, zIndex: 2 }, // Right (small)
-    { scale: 0.7, x: 380, y: 0, zIndex: 1 } // Far right (smallest)
-  ];
+  // Auto-play variables
+  let autoplayInterval = null;
+  let hasUserInteracted = false;
+  let hasStartedAutoplay = false;
   
-  function updateCarousel() {
-    // Set container styles for proper centering
-    const container = carousel.querySelector('.video-container');
-    container.style.display = 'flex';
-    container.style.alignItems = 'center';
-    container.style.justifyContent = 'center';
+  // Function to open modal
+  function openVideoModal() {
+    videoModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // Prevent body scroll
+  }
+  
+  // Function to close modal
+  function closeVideoModal() {
+    videoModal.classList.add('hidden');
+    document.body.style.overflow = ''; // Restore body scroll
+  }
+  
+  // Function to stop autoplay
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+    hasUserInteracted = true;
+  }
+  
+  // Function to start autoplay
+  function startAutoplay() {
+    if (hasUserInteracted || hasStartedAutoplay) return;
     
-    videoItems.forEach((item, index) => {
-      // Calculate position relative to current index
-      let relativePos = index - currentIndex + 2; // +2 to center the current item
+    hasStartedAutoplay = true;
+    
+    // First rotation after 1 second
+    setTimeout(() => {
+      if (!hasUserInteracted) {
+        videoSwiper.slideNext();
+        
+        // Then rotate every 3 seconds
+        autoplayInterval = setInterval(() => {
+          if (!hasUserInteracted) {
+            videoSwiper.slideNext();
+          } else {
+            clearInterval(autoplayInterval);
+          }
+        }, 3000);
+      }
+    }, 1000);
+  }
+  
+  // Add click handlers to video slides
+  videoSlides.forEach(slide => {
+    slide.addEventListener('click', (e) => {
+      stopAutoplay(); // Stop autoplay on any video click
       
-      // Handle wrap-around for circular rotation
-      if (relativePos < 0) relativePos += totalVideos;
-      if (relativePos >= totalVideos) relativePos -= totalVideos;
-      
-      // Apply transformation if position exists
-      if (relativePos < positions.length) {
-        const pos = positions[relativePos];
-        item.style.position = 'absolute';
-        item.style.transform = `translateX(${pos.x}px) translateY(${pos.y}px) scale(${pos.scale})`;
-        item.style.zIndex = pos.zIndex;
-        item.style.opacity = '1'; // No transparency
-        item.style.transition = 'all 0.5s ease-in-out';
-        item.style.display = 'flex';
-        item.style.left = '50%';
-        item.style.top = '50%';
-        item.style.marginLeft = '-179.5px'; // Half of the largest width (359px)
-        item.style.marginTop = '-239.85px'; // Half of the largest height (479.69px)
-      } else {
-        // Hide items that are out of view
-        item.style.display = 'none';
+      // Check if clicked slide is the active (center) one
+      if (slide.classList.contains('swiper-slide-active')) {
+        e.stopPropagation(); // Prevent swiper from handling the click
+        openVideoModal();
+      }
+      // If not active, let swiper handle the click to center it
+    });
+  });
+  
+  // Stop autoplay on navigation button clicks
+  document.querySelector('.video-prev').addEventListener('click', stopAutoplay);
+  document.querySelector('.video-next').addEventListener('click', stopAutoplay);
+  
+  // Stop autoplay on swiper drag/touch
+  videoSwiper.on('touchStart', stopAutoplay);
+  videoSwiper.on('slideChangeTransitionStart', () => {
+    if (videoSwiper.touches.diff !== 0) { // User initiated slide change
+      stopAutoplay();
+    }
+  });
+  
+  // Close modal handlers
+  closeModalBtn.addEventListener('click', closeVideoModal);
+  modalOverlay.addEventListener('click', closeVideoModal);
+  
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
+      closeVideoModal();
+    }
+  });
+  
+  // Intersection Observer to detect when video section is in view
+  const videoSection = document.querySelector('.video-swiper').closest('div[class*="w-[1280px]"]').parentElement;
+  
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5 // Trigger when 50% of section is visible
+  };
+  
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasUserInteracted && !hasStartedAutoplay) {
+        startAutoplay();
       }
     });
-  }
+  }, observerOptions);
   
-  function rotateLeft() {
-    currentIndex = (currentIndex - 1 + totalVideos) % totalVideos;
-    updateCarousel();
-  }
-  
-  function rotateRight() {
-    currentIndex = (currentIndex + 1) % totalVideos;
-    updateCarousel();
-  }
-  
-  // Event listeners
-  prevButton.addEventListener('click', rotateLeft);
-  nextButton.addEventListener('click', rotateRight);
-  
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') rotateLeft();
-    if (e.key === 'ArrowRight') rotateRight();
-  });
-  
-  // Touch/swipe support for mobile
-  let touchStartX = 0;
-  let touchEndX = 0;
-  
-  carousel.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
-  
-  carousel.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  });
-  
-  function handleSwipe() {
-    if (touchEndX < touchStartX - 50) rotateRight(); // Swipe left
-    if (touchEndX > touchStartX + 50) rotateLeft(); // Swipe right
-  }
-  
-  // Initialize carousel positions
-  updateCarousel();
+  sectionObserver.observe(videoSection);
 });
 </script>
 </body>
