@@ -67,11 +67,11 @@
        background-color: #9ca3af;
    }
    
-   /* Subtle fade-in-up animation for impact numbers */
-   .impact-number {
+   /* Fade-in-up animation for impact numbers and subtexts */
+   .impact-number, .impact-subtext {
        opacity: 0;
-       transform: translateY(20px);
-       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+       transform: translateY(30px);
+       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
    }
    
    .impact-number.visible {
@@ -79,31 +79,68 @@
        transform: translateY(0);
    }
    
-   /* Animation for floating cards */
-   .float-card {
-       transform: translate3d(0, 0, 0);
+   .impact-subtext.visible {
        opacity: 1;
-       transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-       will-change: transform, opacity;
-       backface-visibility: hidden;
+       transform: translateY(0);
+       transition-delay: 0.3s;
+   }
+   
+   /* Fade-in animation for licensing section */
+   .licensing-fade-row {
+       opacity: 0;
+       transform: translateY(20px);
+       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+   }
+   
+   .licensing-fade-row.visible {
+       opacity: 1;
+       transform: translateY(0);
+   }
+   
+   .licensing-number {
+       opacity: 0;
+       transform: translateY(20px);
+       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+   }
+   
+   .licensing-number.visible {
+       opacity: 1;
+       transform: translateY(0);
+   }
+   
+   /* Hover effect for explore cards */
+   .explore-card {
+       cursor: pointer;
+       transition: background-color 0.3s ease;
+   }
+   
+   .explore-card:hover {
+       background-color: rgba(0, 0, 0, 0.04);
+   }
+   
+   /* Animation for floating cards - Simple and performant */
+   .float-card {
+       opacity: 1;
+       transition: opacity 0.5s ease, transform 0.5s ease;
+       will-change: transform;
    }
    
    .float-card.animate-left {
-       animation: slideLeft 10s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+       animation: floatLeft 12s ease-in-out infinite;
    }
    
    .float-card.animate-right {
-       animation: slideRight 10s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+       animation: floatRight 12s ease-in-out infinite;
    }
    
-   @keyframes slideLeft {
-       from { transform: translate3d(0, 0, 0); }
-       to { transform: translate3d(-40px, 0, 0); }
+   @keyframes floatLeft {
+       0%, 100% { transform: translateX(0); }
+       50% { transform: translateX(-60px); }
    }
    
-   @keyframes slideRight {
-       from { transform: translate3d(0, 0, 0); }
-       to { transform: translate3d(40px, 0, 0); }
+   @keyframes floatRight {
+       0%, 100% { transform: translateX(0); }
+       50% { transform: translateX(60px); }
    }
    
    .float-card.fade-out {
@@ -112,7 +149,113 @@
    
    .float-card.transitioning {
        animation: none !important;
-       transform: translate3d(0, 0, 0) !important;
+   }
+   
+   /* Vision section fade-in animation */
+   .vision-content, .vision-image {
+       opacity: 0;
+       transform: translateY(40px);
+       transition: opacity 1s ease-out, transform 1s ease-out;
+   }
+   
+   .vision-content.visible {
+       opacity: 1;
+       transform: translateY(0);
+   }
+   
+   .vision-image.visible {
+       opacity: 1;
+       transform: translateY(0);
+       transition-delay: 0.3s;
+   }
+   
+   /* Tab switching styles */
+   .tab-button {
+       position: relative;
+       cursor: pointer;
+       transition: all 0.3s ease;
+   }
+   
+   .tab-button::after {
+       content: '';
+       position: absolute;
+       bottom: -2px;
+       left: 50%;
+       width: 0;
+       height: 3px;
+       background-color: #04994f;
+       transition: all 0.3s ease;
+       transform: translateX(-50%);
+   }
+   
+   .tab-button.active::after {
+       width: 100%;
+   }
+   
+   .tab-button.active {
+       background-color: #04994f !important;
+   }
+   
+   .tab-button.active .tab-text {
+       color: #ffffff !important;
+   }
+   
+   .tab-button:not(.active) .tab-text {
+       color: #9da4ae !important;
+       transition: color 0.3s ease;
+   }
+   
+   .tab-button:not(.active):hover .tab-text {
+       color: #04994f !important;
+   }
+   
+   /* Tab content animation */
+   .tab-content {
+       position: absolute;
+       width: 100%;
+       opacity: 0;
+       transform: translateY(20px);
+       transition: opacity 0.3s ease, transform 0.3s ease;
+       pointer-events: none;
+   }
+   
+   .tab-content.active {
+       opacity: 1;
+       transform: translateY(0);
+       pointer-events: auto;
+   }
+   
+   #tab-contents {
+       position: relative;
+       min-height: 400px;
+       width: 100%;
+   }
+   
+   .tab-content > div {
+       width: 100%;
+   }
+   
+   /* Button hover effects */
+   .bg-button-primary {
+       cursor: pointer;
+       transition: background-color 0.3s ease, transform 0.1s ease;
+   }
+   
+   .bg-button-primary:hover {
+       background-color: #037a3f !important; /* Darker shade of #04994f */
+       transform: translateY(-1px);
+   }
+   
+   /* Neutral button hover effects */
+   .bg-button-button-background-neutral-default {
+       cursor: pointer;
+       transition: background-color 0.3s ease, transform 0.1s ease;
+       background-color: #f3f4f6;
+   }
+   
+   .bg-button-button-background-neutral-default:hover {
+       background-color: #e5e7eb !important; /* Darker shade of neutral */
+       transform: translateY(-1px);
    }
    </style>
   <title>Document</title>
@@ -555,7 +698,7 @@
             0M Tons
           </div>
           <div
-            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
+            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch impact-subtext"
           >
             CO₂e Avoided
           </div>
@@ -570,7 +713,7 @@
             0B SAR
           </div>
           <div
-            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
+            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch impact-subtext"
           >
             GDP Contribution
           </div>
@@ -585,7 +728,7 @@
             0+
           </div>
           <div
-            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
+            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch impact-subtext"
           >
             Jobs Created
           </div>
@@ -600,7 +743,7 @@
             0+
           </div>
           <div
-            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
+            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch impact-subtext"
           >
             Facilities Nationwide
           </div>
@@ -615,7 +758,7 @@
             0B Tons
           </div>
           <div
-            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
+            class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch impact-subtext"
           >
             Waste Processed
           </div>
@@ -747,52 +890,60 @@
             class="flex flex-row gap-[42px] items-center justify-center self-stretch shrink-0 relative"
           >
             <div
-              class="bg-[#04994f] rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              id="tab-about"
+              class="tab-button bg-[#04994f] rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden active"
+              data-tab="about"
             >
               <div
                 class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
               >
                 <div
-                  class="text-text-text-oncolor-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  class="tab-text text-text-text-oncolor-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
                 >
                   About us
                 </div>
               </div>
             </div>
             <div
-              class="rounded-radius-radius-sm flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[103px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              id="tab-vision"
+              class="tab-button rounded-radius-radius-sm flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[103px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              data-tab="vision"
             >
               <div
                 class="flex flex-row gap-0 items-center justify-center shrink-0 w-[50px] relative"
               >
                 <div
-                  class="text-[#9da4ae] text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  class="tab-text text-[#9da4ae] text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
                 >
                   Vision
                 </div>
               </div>
             </div>
             <div
-              class="rounded-radius-radius-sm flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              id="tab-mission"
+              class="tab-button rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              data-tab="mission"
             >
               <div
                 class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
               >
                 <div
-                  class="text-global-text-default-disabled text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  class="tab-text text-global-text-default-disabled text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
                 >
                   Mission
                 </div>
               </div>
             </div>
             <div
-              class="rounded-radius-radius-sm flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              id="tab-tasks"
+              class="tab-button rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              data-tab="tasks"
             >
               <div
                 class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
               >
                 <div
-                  class="text-global-text-default-disabled text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  class="tab-text text-global-text-default-disabled text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
                 >
                   Tasks
                 </div>
@@ -801,12 +952,78 @@
           </div>
         </div>
       </div>
-      <div
-        class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
-      >
-        <div
-          class="flex flex-col gap-[30px] items-start justify-start shrink-0 w-[499px] relative"
-        >
+      <!-- Tab Contents Container -->
+      <div id="tab-contents" class="relative">
+        <!-- About Us Content -->
+        <div id="content-about" class="tab-content active">
+          <div
+            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
+          >
+            <div
+              class="flex flex-col gap-[30px] items-start justify-start shrink-0 w-[499px] relative vision-content"
+            >
+              <div
+                class="flex flex-col gap-spacing-space-xl items-start justify-start self-stretch shrink-0 h-[175px] relative"
+              >
+                <div
+                  class="flex flex-row gap-0 items-center justify-start self-stretch shrink-0 relative"
+                >
+                  <div
+                    class="text-[#000000] text-left font-regular-h2-font-family text-regular-h2-font-size leading-regular-h2-line-height font-regular-h2-font-weight relative w-[376px] h-[34px] flex items-end justify-start"
+                  >
+                    About MWAN
+                  </div>
+                </div>
+                <div
+                  class="text-[#696969] text-left font-['IbmPlexSans-Regular',_sans-serif] text-base leading-7 font-normal relative self-stretch h-[122px]"
+                >
+                  MWAN is the Kingdom's leading waste management authority, dedicated to transforming 
+                  Saudi Arabia's approach to waste management through innovative solutions, sustainable 
+                  practices, and strategic partnerships that align with Vision 2030's environmental goals.
+                </div>
+              </div>
+              <div
+                class="bg-button-primary rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[113px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              >
+                <div
+                  class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
+                >
+                  <div
+                    class="text-text-text-oncolor-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  >
+                    Learn more
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img
+              class="rounded flex flex-col gap-[34px] items-start justify-center shrink-0 w-[525px] h-[332px] relative overflow-hidden vision-image"
+              style="
+                background: linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 1) 5.000000074505806%,
+                    rgba(0, 0, 0, 0) 48.84729087352753%
+                  ),
+                  linear-gradient(
+                    186.35deg,
+                    rgba(0, 0, 0, 1) 12.110794335603714%,
+                    rgba(0, 0, 0, 0) 38.7077659368515%
+                  );
+                object-fit: cover;
+              "
+              src="header-with-breadcrump0.png"
+            />
+          </div>
+        </div>
+        
+        <!-- Vision Content -->
+        <div id="content-vision" class="tab-content">
+          <div
+            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
+          >
+            <div
+              class="flex flex-col gap-[30px] items-start justify-start shrink-0 w-[499px] relative vision-content"
+            >
           <div
             class="flex flex-col gap-spacing-space-xl items-start justify-start self-stretch shrink-0 h-[175px] relative"
           >
@@ -843,7 +1060,7 @@
           </div>
         </div>
         <img
-          class="rounded flex flex-col gap-[34px] items-start justify-center shrink-0 w-[525px] h-[332px] relative overflow-hidden"
+          class="rounded flex flex-col gap-[34px] items-start justify-center shrink-0 w-[525px] h-[332px] relative overflow-hidden vision-image"
           style="
             background: linear-gradient(
                 0deg,
@@ -859,23 +1076,150 @@
           "
           src="header-with-breadcrump0.png"
         />
+          </div>
+        </div>
+        
+        <!-- Mission Content -->
+        <div id="content-mission" class="tab-content">
+          <div
+            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
+          >
+            <div
+              class="flex flex-col gap-[30px] items-start justify-start shrink-0 w-[499px] relative vision-content"
+            >
+              <div
+                class="flex flex-col gap-spacing-space-xl items-start justify-start self-stretch shrink-0 h-[175px] relative"
+              >
+                <div
+                  class="flex flex-row gap-0 items-center justify-start self-stretch shrink-0 relative"
+                >
+                  <div
+                    class="text-[#000000] text-left font-regular-h2-font-family text-regular-h2-font-size leading-regular-h2-line-height font-regular-h2-font-weight relative w-[376px] h-[34px] flex items-end justify-start"
+                  >
+                    Our Mission
+                  </div>
+                </div>
+                <div
+                  class="text-[#696969] text-left font-['IbmPlexSans-Regular',_sans-serif] text-base leading-7 font-normal relative self-stretch h-[122px]"
+                >
+                  To lead the transformation of waste management in Saudi Arabia by implementing 
+                  cutting-edge technologies, fostering circular economy principles, and creating 
+                  sustainable solutions that protect our environment for future generations.
+                </div>
+              </div>
+              <div
+                class="bg-button-primary rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[113px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              >
+                <div
+                  class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
+                >
+                  <div
+                    class="text-text-text-oncolor-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  >
+                    Learn more
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img
+              class="rounded flex flex-col gap-[34px] items-start justify-center shrink-0 w-[525px] h-[332px] relative overflow-hidden vision-image"
+              style="
+                background: linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 1) 5.000000074505806%,
+                    rgba(0, 0, 0, 0) 48.84729087352753%
+                  ),
+                  linear-gradient(
+                    186.35deg,
+                    rgba(0, 0, 0, 1) 12.110794335603714%,
+                    rgba(0, 0, 0, 0) 38.7077659368515%
+                  );
+                object-fit: cover;
+              "
+              src="header-with-breadcrump0.png"
+            />
+          </div>
+        </div>
+        
+        <!-- Tasks Content -->
+        <div id="content-tasks" class="tab-content">
+          <div
+            class="flex flex-row items-center justify-between self-stretch shrink-0 relative"
+          >
+            <div
+              class="flex flex-col gap-[30px] items-start justify-start shrink-0 w-[499px] relative vision-content"
+            >
+              <div
+                class="flex flex-col gap-spacing-space-xl items-start justify-start self-stretch shrink-0 h-[175px] relative"
+              >
+                <div
+                  class="flex flex-row gap-0 items-center justify-start self-stretch shrink-0 relative"
+                >
+                  <div
+                    class="text-[#000000] text-left font-regular-h2-font-family text-regular-h2-font-size leading-regular-h2-line-height font-regular-h2-font-weight relative w-[376px] h-[34px] flex items-end justify-start"
+                  >
+                    Our Key Tasks
+                  </div>
+                </div>
+                <div
+                  class="text-[#696969] text-left font-['IbmPlexSans-Regular',_sans-serif] text-base leading-7 font-normal relative self-stretch h-[122px]"
+                >
+                  Developing comprehensive waste management strategies, establishing regulatory frameworks, 
+                  promoting recycling initiatives, and facilitating public-private partnerships to achieve 
+                  zero waste goals and environmental sustainability across the Kingdom.
+                </div>
+              </div>
+              <div
+                class="bg-button-primary rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[113px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+              >
+                <div
+                  class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
+                >
+                  <div
+                    class="text-text-text-oncolor-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-medium relative"
+                  >
+                    Learn more
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img
+              class="rounded flex flex-col gap-[34px] items-start justify-center shrink-0 w-[525px] h-[332px] relative overflow-hidden vision-image"
+              style="
+                background: linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 1) 5.000000074505806%,
+                    rgba(0, 0, 0, 0) 48.84729087352753%
+                  ),
+                  linear-gradient(
+                    186.35deg,
+                    rgba(0, 0, 0, 1) 12.110794335603714%,
+                    rgba(0, 0, 0, 0) 38.7077659368515%
+                  );
+                object-fit: cover;
+              "
+              src="header-with-breadcrump0.png"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div
       class="pt-[89px] pr-20 pb-[89px] pl-20 flex flex-col gap-2.5 items-start justify-start self-stretch shrink-0 relative"
     >
       <div
-        class="bg-[#f8f8f8] flex flex-row gap-[70px] items-center justify-start self-stretch shrink-0 h-[489px] relative"
+        class="bg-[#f8f8f8] flex flex-row gap-[70px] items-center justify-start self-stretch shrink-0 h-[489px] relative overflow-hidden"
       >
-        <div class="self-stretch shrink-0 w-[339px] static">
+        <div class="self-stretch shrink-0 w-[339px] static overflow-hidden">
           <img
             class="w-[339px] h-[486.05px] absolute left-0 top-0"
             style="object-fit: cover; aspect-ratio: 339/486.05"
             src="image-240.png"
           />
           <img
-            class="w-[339px] h-[486.02px] absolute left-0 top-[2.98px]"
-            style="object-fit: cover; aspect-ratio: 339/486.02"
+            id="parallax-image"
+            class="w-[339px] h-[486.02px] absolute left-0 top-[15px]"
+            style="object-fit: cover; aspect-ratio: 339/486.02; will-change: transform; transition: transform 0.1s ease-out"
             src="getimg-ai-img-bb-m-1-q-w-rq-0-y-a-8-jc-v-nj-bb-wc-photoroom-20.png"
           />
         </div>
@@ -886,12 +1230,14 @@
             class="flex flex-col gap-[13px] items-start justify-start self-stretch shrink-0 h-[181px] relative"
           >
             <div
-              class="text-text-regular text-left font-['IbmPlexSans-Regular',_sans-serif] text-base leading-normal font-normal relative self-stretch"
+              class="text-text-regular text-left font-['IbmPlexSans-Regular',_sans-serif] text-base leading-normal font-normal relative self-stretch licensing-fade-row"
+              style="transition-delay: 0.1s"
             >
               Licensing &amp; Permits
             </div>
             <div
-              class="text-text-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-[120%] font-medium relative self-stretch flex-1"
+              class="text-text-primary text-left font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-[120%] font-medium relative self-stretch flex-1 licensing-fade-row"
+              style="transition-delay: 0.2s"
             >
               Power Your Business
               <br />
@@ -901,15 +1247,18 @@
             </div>
           </div>
           <div
-            class="flex flex-row gap-[50px] items-start justify-start self-stretch shrink-0 relative"
+            class="flex flex-row gap-[50px] items-start justify-start self-stretch shrink-0 relative licensing-fade-row"
+            style="transition-delay: 0.3s"
           >
             <div
               class="flex flex-col gap-0 items-start justify-start shrink-0 w-[216px] relative"
             >
               <div
-                class="text-text-regular text-left font-['IbmPlexSans-Medium',_sans-serif] text-[53.99827194213867px] leading-[120%] font-medium relative w-[202px]"
+                class="text-text-regular text-left font-['IbmPlexSans-Medium',_sans-serif] text-[53.99827194213867px] leading-[120%] font-medium relative w-[202px] licensing-number"
+                data-target="10000"
+                data-suffix="+"
               >
-                10k+
+                0+
               </div>
               <div
                 class="text-text-regular text-left font-['IbmPlexSans-Regular',_sans-serif] text-lg leading-[120%] font-normal relative self-stretch"
@@ -924,9 +1273,11 @@
                 class="flex flex-col gap-[10.03px] items-start justify-start shrink-0 w-[201px] relative"
               >
                 <div
-                  class="text-text-regular text-left font-['IbmPlexSans-Medium',_sans-serif] text-[53.99827194213867px] leading-[120%] font-medium relative self-stretch"
+                  class="text-text-regular text-left font-['IbmPlexSans-Medium',_sans-serif] text-[53.99827194213867px] leading-[120%] font-medium relative self-stretch licensing-number"
+                  data-target="8000"
+                  data-suffix="+"
                 >
-                  8k+
+                  0+
                 </div>
               </div>
               <div
@@ -942,9 +1293,11 @@
                 class="flex flex-col gap-[10.03px] items-center justify-start shrink-0 w-[344.17px] relative"
               >
                 <div
-                  class="text-text-regular text-left font-['IbmPlexSans-Medium',_sans-serif] text-[53.99827194213867px] leading-[120%] font-medium relative w-[189px]"
+                  class="text-text-regular text-left font-['IbmPlexSans-Medium',_sans-serif] text-[53.99827194213867px] leading-[120%] font-medium relative w-[189px] licensing-number"
+                  data-target="18000"
+                  data-suffix="+"
                 >
-                  18k+
+                  0+
                 </div>
               </div>
               <div
@@ -955,7 +1308,8 @@
             </div>
           </div>
           <div
-            class="bg-button-primary rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[113px] h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+            class="bg-button-primary rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 w-[113px] h-10 min-h-[40px] max-h-10 relative overflow-hidden licensing-fade-row"
+            style="transition-delay: 0.4s"
           >
             <div
               class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
@@ -985,9 +1339,26 @@
         <br />
         and the latest industry news.
       </div>
-      <div class="shrink-0 w-[1280px] h-[479.69px] static">
+      <div class="shrink-0 w-[1280px] h-[479.69px] static relative" id="video-carousel">
+        <!-- Left Arrow -->
+        <button id="video-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white rounded-full p-4 transition-all duration-300 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        
+        <!-- Right Arrow -->
+        <button id="video-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black/90 text-white rounded-full p-4 transition-all duration-300 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+        
+        <!-- Video Container -->
+        <div class="video-container relative w-full h-full overflow-hidden">
+          <div class="video-track flex items-center justify-center h-full relative" style="transition: transform 0.5s ease-in-out;">
         <div
-          class="rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-[255.04px] h-[340.79px] absolute left-20 top-[389.04px]"
+          class="video-item rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-[255.04px] h-[340.79px] absolute" data-index="0"
           style="
             background: linear-gradient(
               180deg,
@@ -1016,7 +1387,7 @@
           </div>
         </div>
         <div
-          class="rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-[255.04px] h-[340.79px] absolute left-[1104.96px] top-[389.04px]"
+          class="video-item rounded-[5.68px] p-[22.73px] flex flex-col items-center justify-between w-[255.04px] h-[340.79px] absolute" data-index="1"
           style="
             background: linear-gradient(
               180deg,
@@ -1045,7 +1416,7 @@
           </div>
         </div>
         <div
-          class="rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-[303.8px] h-[405.94px] absolute left-[845.69px] top-[356.25px]"
+          class="video-item rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-[303.8px] h-[405.94px] absolute" data-index="2"
           style="
             background: linear-gradient(
               180deg,
@@ -1074,7 +1445,7 @@
           </div>
         </div>
         <div
-          class="rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-[303.8px] h-[405.94px] absolute left-[294.18px] top-[356.25px]"
+          class="video-item rounded-[6.77px] p-[27.08px] flex flex-col items-center justify-between w-[303.8px] h-[405.94px] absolute" data-index="3"
           style="
             background: linear-gradient(
               180deg,
@@ -1103,7 +1474,7 @@
           </div>
         </div>
         <div
-          class="rounded-lg p-8 flex flex-col items-center justify-between w-[359px] h-[479.69px] absolute left-[540.45px] top-[319.16px]"
+          class="video-item rounded-lg p-8 flex flex-col items-center justify-between w-[359px] h-[479.69px] absolute" data-index="4"
           style="
             background: linear-gradient(
               180deg,
@@ -1127,6 +1498,8 @@
             class="text-[#ffffff] text-left font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
           >
             We help businesses go green and stay compliant.
+          </div>
+        </div>
           </div>
         </div>
       </div>
@@ -1159,13 +1532,14 @@
         "
       >
         <div
-          class="text-primary-sa-50 text-center font-['IbmPlexSansArabic-Medium',_sans-serif] text-sm leading-[110%] font-medium relative w-[640px]"
-          style="letter-spacing: 0.04em"
+          class="text-primary-sa-50 text-center font-['IbmPlexSansArabic-Medium',_sans-serif] text-sm leading-[110%] font-medium relative w-[640px] licensing-fade-row"
+          style="letter-spacing: 0.04em; transition-delay: 0.1s"
         >
           Licensing &amp; Permits
         </div>
         <div
-          class="text-text-white text-center font-regular-h1-font-family text-regular-h1-font-size leading-regular-h1-line-height font-regular-h1-font-weight relative w-[670px] flex items-center justify-center"
+          class="text-text-white text-center font-regular-h1-font-family text-regular-h1-font-size leading-regular-h1-line-height font-regular-h1-font-weight relative w-[670px] flex items-center justify-center licensing-fade-row"
+          style="transition-delay: 0.2s"
         >
           Power Your Business
           <br />
@@ -1174,21 +1548,25 @@
           Seal of Approval.
         </div>
         <div
-          class="text-primary-sa-25 text-center font-['IbmPlexSansArabic-Regular',_sans-serif] text-xl leading-[115%] font-normal relative w-[478px] flex items-end justify-center"
+          class="text-primary-sa-25 text-center font-['IbmPlexSansArabic-Regular',_sans-serif] text-xl leading-[115%] font-normal relative w-[478px] flex items-end justify-center licensing-fade-row"
+          style="transition-delay: 0.3s"
         >
           We build what healthcare needs to adapt, improve, and thrive, wherever
           it&#039;s needed most.
         </div>
         <div
-          class="flex flex-row gap-0 items-center justify-center self-stretch shrink-0 h-[75px] relative"
+          class="flex flex-row gap-0 items-center justify-center self-stretch shrink-0 h-[75px] relative licensing-fade-row"
+          style="transition-delay: 0.4s"
         >
           <div
             class="flex flex-col gap-0 items-start justify-start shrink-0 w-[216px] relative"
           >
             <div
-              class="text-text-white text-center font-['IbmPlexSans-Medium',_sans-serif] text-[44px] leading-[120%] font-medium relative self-stretch"
+              class="text-text-white text-center font-['IbmPlexSans-Medium',_sans-serif] text-[44px] leading-[120%] font-medium relative self-stretch licensing-number"
+              data-target="10000"
+              data-suffix="+"
             >
-              10k+
+              0+
             </div>
             <div
               class="text-text-white text-center font-['IbmPlexSans-Regular',_sans-serif] text-lg leading-[120%] font-normal relative self-stretch"
@@ -1203,9 +1581,11 @@
               class="flex flex-col gap-[10.03px] items-start justify-start shrink-0 w-[201px] relative"
             >
               <div
-                class="text-icon-white text-center font-['IbmPlexSans-Medium',_sans-serif] text-[44px] leading-[120%] font-medium relative self-stretch"
+                class="text-icon-white text-center font-['IbmPlexSans-Medium',_sans-serif] text-[44px] leading-[120%] font-medium relative self-stretch licensing-number"
+                data-target="8000"
+                data-suffix="+"
               >
-                8k+
+                0+
               </div>
             </div>
             <div
@@ -1221,9 +1601,11 @@
               class="flex flex-col gap-[10.03px] items-center justify-start shrink-0 w-[344.17px] relative"
             >
               <div
-                class="text-text-white text-center font-['IbmPlexSans-Medium',_sans-serif] text-[44px] leading-[120%] font-medium relative w-[146px]"
+                class="text-text-white text-center font-['IbmPlexSans-Medium',_sans-serif] text-[44px] leading-[120%] font-medium relative w-[146px] licensing-number"
+                data-target="18000"
+                data-suffix="+"
               >
-                18k+
+                0+
               </div>
             </div>
             <div
@@ -1234,7 +1616,8 @@
           </div>
         </div>
         <div
-          class="bg-button-button-background-neutral-default rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden"
+          class="bg-button-button-background-neutral-default rounded-radius-radius-sm pt-global-spacing-none pr-button-buttons-lg-padding pb-global-spacing-none pl-button-buttons-lg-padding flex flex-row gap-button-buttons-lg-gap items-center justify-center shrink-0 h-10 min-h-[40px] max-h-10 relative overflow-hidden licensing-fade-row"
+          style="transition-delay: 0.5s"
         >
           <div
             class="flex flex-row gap-0 items-center justify-center shrink-0 relative"
@@ -1269,7 +1652,7 @@
         class="flex flex-row gap-0 items-center justify-start self-stretch shrink-0 relative"
       >
         <div
-          class="bg-[#ffffff] border-solid border-[#c6c6c6] border p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative"
+          class="bg-[#ffffff] border-solid border-[#c6c6c6] border p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative explore-card"
         >
           <div class="shrink-0 w-[152px] h-[154px] relative overflow-hidden">
             <div
@@ -1315,7 +1698,7 @@
           </div>
         </div>
         <div
-          class="bg-[#ffffff] border-solid border-[#c6c6c6] border-t border-r border-b p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative"
+          class="bg-[#ffffff] border-solid border-[#c6c6c6] border-t border-r border-b p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative explore-card"
         >
           <div class="shrink-0 w-[152px] h-[154px] relative overflow-hidden">
             <div
@@ -1363,7 +1746,7 @@
           </div>
         </div>
         <div
-          class="bg-[#ffffff] border-solid border-[#c6c6c6] border-t border-r border-b p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative"
+          class="bg-[#ffffff] border-solid border-[#c6c6c6] border-t border-r border-b p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative explore-card"
         >
           <div class="shrink-0 w-[152px] h-[154px] relative overflow-hidden">
             <div
@@ -1411,7 +1794,7 @@
           </div>
         </div>
         <div
-          class="bg-[#ffffff] border-solid border-[#c6c6c6] border-t border-r border-b p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative"
+          class="bg-[#ffffff] border-solid border-[#c6c6c6] border-t border-r border-b p-4 flex flex-row gap-4 items-center justify-start self-stretch flex-1 relative explore-card"
         >
           <div class="shrink-0 w-[152px] h-[154px] relative overflow-hidden">
             <div
@@ -2159,20 +2542,30 @@ document.addEventListener('DOMContentLoaded', function() {
         entry.target.classList.add('animated');
         entry.target.classList.add('visible');
         
-        // Start count animation after fade-in begins
-        setTimeout(() => {
-          const target = parseFloat(entry.target.dataset.target);
-          const decimals = parseInt(entry.target.dataset.decimals) || 0;
-          const duration = 1200; // 1.2 seconds
+        // If it's a number, start count animation
+        if (entry.target.classList.contains('impact-number')) {
+          // Also animate the subtext
+          const parent = entry.target.parentElement;
+          const subtext = parent.querySelector('.impact-subtext');
+          if (subtext) {
+            subtext.classList.add('visible');
+          }
           
-          animateValue(entry.target, 0, target, duration, decimals);
-        }, 200); // Small delay for smooth transition
+          // Start count animation after fade-in begins
+          setTimeout(() => {
+            const target = parseFloat(entry.target.dataset.target);
+            const decimals = parseInt(entry.target.dataset.decimals) || 0;
+            const duration = 1500; // 1.5 seconds for more dramatic effect
+            
+            animateValue(entry.target, 0, target, duration, decimals);
+          }, 300); // Increased delay for more visible fade-in
+        }
       }
     });
   }, observerOptions);
   
-  // Observe all impact numbers
-  document.querySelectorAll('.impact-number').forEach(element => {
+  // Observe all impact numbers and subtexts
+  document.querySelectorAll('.impact-number, .impact-subtext').forEach(element => {
     observer.observe(element);
   });
 });
@@ -2219,9 +2612,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const card2 = document.getElementById('card2');
     const card3 = document.getElementById('card3');
     
-    if (card1) card1.classList.add('animate-left');
-    if (card2) card2.classList.add('animate-right');
-    if (card3) card3.classList.add('animate-left');
+    if (card1 && !card1.classList.contains('animate-left')) {
+      card1.classList.add('animate-left');
+    }
+    if (card2 && !card2.classList.contains('animate-right')) {
+      card2.classList.add('animate-right');
+    }
+    if (card3 && !card3.classList.contains('animate-left')) {
+      card3.classList.add('animate-left');
+    }
   }
   
   function transitionCards() {
@@ -2232,67 +2631,43 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     const contents = currentSet === 0 ? alternateContents : cardContents;
     
-    // First, add transitioning class to stop animation
+    // Fade out cards without stopping animation
     cards.forEach(({ id }) => {
       const card = document.getElementById(id);
       if (card) {
-        card.classList.add('transitioning');
-        card.classList.remove('animate-left', 'animate-right');
+        card.classList.add('fade-out');
       }
     });
     
-    // Small delay to ensure animation has stopped
-    requestAnimationFrame(() => {
-      // Fade out cards
-      cards.forEach(({ id }) => {
+    // Change content after fade out
+    setTimeout(() => {
+      cards.forEach(({ id }, index) => {
         const card = document.getElementById(id);
         if (card) {
-          card.classList.add('fade-out');
+          const titleElement = card.querySelector('.text-\\[\\#000000\\]');
+          const imageElement = card.querySelector('img');
+          
+          if (titleElement) {
+            titleElement.textContent = contents[index].title;
+          }
+          if (imageElement) {
+            imageElement.src = contents[index].image;
+          }
         }
       });
       
-      // After fade out, change content
+      // Fade in with new content
       setTimeout(() => {
-        cards.forEach(({ id }, index) => {
+        cards.forEach(({ id }) => {
           const card = document.getElementById(id);
           if (card) {
-            const titleElement = card.querySelector('.text-\\[\\#000000\\]');
-            const imageElement = card.querySelector('img');
-            
-            if (titleElement) {
-              titleElement.textContent = contents[index].title;
-            }
-            if (imageElement) {
-              // Preload new image before showing
-              const newImage = new Image();
-              newImage.onload = () => {
-                imageElement.src = contents[index].image;
-              };
-              newImage.src = contents[index].image;
-            }
+            card.classList.remove('fade-out');
           }
         });
-        
-        // Fade in with new content
-        setTimeout(() => {
-          cards.forEach(({ id, direction }) => {
-            const card = document.getElementById(id);
-            if (card) {
-              card.classList.remove('fade-out', 'transitioning');
-              
-              // Start animation after fade in completes
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  card.classList.add(direction);
-                });
-              });
-            }
-          });
-        }, 100);
-        
-        currentSet = currentSet === 0 ? 1 : 0;
-      }, 800);
-    });
+      }, 100);
+      
+      currentSet = currentSet === 0 ? 1 : 0;
+    }, 500);
   }
   
   // Set up Intersection Observer for the impact section
@@ -2302,11 +2677,11 @@ document.addEventListener('DOMContentLoaded', function() {
         animationStarted = true;
         startAnimation();
         
-        // Start transition cycle after 10 seconds
+        // Start transition cycle after 8 seconds for better engagement
         setTimeout(() => {
           transitionCards();
-          transitionInterval = setInterval(transitionCards, 10000);
-        }, 10000);
+          transitionInterval = setInterval(transitionCards, 12000);
+        }, 8000);
       }
     });
   }, { threshold: 0.3 });
@@ -2316,6 +2691,343 @@ document.addEventListener('DOMContentLoaded', function() {
   if (firstCard) {
     impactObserver.observe(firstCard);
   }
+});
+
+// Scroll-triggered horizontal movement for service cards
+document.addEventListener('DOMContentLoaded', function() {
+  const serviceCardsContainer = document.querySelector('.service-cards-container');
+  const serviceCardsSection = serviceCardsContainer ? serviceCardsContainer.closest('.flex-col') : null;
+  
+  if (serviceCardsContainer && serviceCardsSection) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    function updateCardsPosition() {
+      const scrollY = window.scrollY;
+      const sectionTop = serviceCardsSection.offsetTop;
+      const sectionHeight = serviceCardsSection.offsetHeight;
+      const windowHeight = window.innerHeight;
+      
+      // Check if section is in viewport
+      if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + sectionHeight) {
+        // Calculate how much the user has scrolled through the section
+        const scrollProgress = (scrollY + windowHeight - sectionTop) / (windowHeight + sectionHeight);
+        
+        // Calculate subtle horizontal movement (max 50px)
+        const maxMovement = 50;
+        const movement = scrollProgress * maxMovement;
+        
+        // Apply transform to move cards left
+        serviceCardsContainer.style.transform = `translateX(-${movement}px)`;
+        serviceCardsContainer.style.transition = 'transform 0.15s ease-out';
+      }
+      
+      lastScrollY = scrollY;
+      ticking = false;
+    }
+    
+    function requestTick() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateCardsPosition);
+        ticking = true;
+      }
+    }
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // Initial position update
+    updateCardsPosition();
+  }
+});
+
+
+// Tab switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+  let isTransitioning = false;
+  
+  // Initialize fade-in for all vision content and images
+  const allVisionContent = document.querySelectorAll('.vision-content');
+  const allVisionImages = document.querySelectorAll('.vision-image');
+  
+  const visionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        
+        // Find corresponding image
+        const parent = entry.target.closest('.tab-content');
+        if (parent) {
+          const image = parent.querySelector('.vision-image');
+          if (image) {
+            setTimeout(() => {
+              image.classList.add('visible');
+            }, 300);
+          }
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+  
+  // Observe all vision content elements
+  allVisionContent.forEach(content => {
+    visionObserver.observe(content);
+  });
+  
+  tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      if (isTransitioning) return;
+      
+      const targetTab = this.dataset.tab;
+      const currentActive = document.querySelector('.tab-content.active');
+      const targetContent = document.getElementById(`content-${targetTab}`);
+      
+      // Don't do anything if clicking the already active tab
+      if (this.classList.contains('active')) return;
+      
+      isTransitioning = true;
+      
+      // Update tab buttons
+      tabButtons.forEach(btn => {
+        btn.classList.remove('active', 'bg-[#04994f]');
+      });
+      this.classList.add('active', 'bg-[#04994f]');
+      
+      // Smooth content transition
+      if (currentActive && targetContent) {
+        // Fade out current content
+        currentActive.style.opacity = '0';
+        currentActive.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+          currentActive.classList.remove('active');
+          targetContent.classList.add('active');
+          
+          // Force reflow
+          void targetContent.offsetHeight;
+          
+          // Fade in new content
+          targetContent.style.opacity = '1';
+          targetContent.style.transform = 'translateY(0)';
+          
+          isTransitioning = false;
+        }, 300);
+      }
+    });
+  });
+  
+  // Parallax effect for the image
+  const parallaxImage = document.getElementById('parallax-image');
+  if (parallaxImage) {
+    let ticking = false;
+    
+    function updateParallax() {
+      const container = parallaxImage.closest('.bg-\\[\\#f8f8f8\\]');
+      
+      if (!container) return;
+      
+      const scrolled = window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const containerRect = container.getBoundingClientRect();
+      const containerTop = containerRect.top + scrolled;
+      
+      // Check if container is in extended viewport (for smoother effect)
+      if (containerTop < scrolled + windowHeight * 1.5 && containerTop + containerRect.height > scrolled - windowHeight * 0.5) {
+        // Calculate relative position in viewport
+        const containerCenter = containerTop + containerRect.height / 2;
+        const viewportCenter = scrolled + windowHeight / 2;
+        const difference = viewportCenter - containerCenter;
+        
+        // Parallax speed factor (0.1 = 10% of scroll speed for subtle effect)
+        const parallaxSpeed = 0.1;
+        const offset = difference * parallaxSpeed;
+        
+        // Maximum safe movement to stay within container
+        // Reduced for more subtle effect
+        const maxOffset = 20; // Subtle 20px maximum movement
+        
+        // Clamp the offset
+        const clampedOffset = Math.max(-maxOffset, Math.min(maxOffset, offset));
+        
+        // Apply transform without scale for cleaner effect
+        parallaxImage.style.transform = `translateY(${clampedOffset}px)`;
+      }
+      
+      ticking = false;
+    }
+    
+    function requestTick() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+    
+    // Add scroll event listener with passive flag for better performance
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // Add resize listener
+    window.addEventListener('resize', requestTick);
+    
+    // Initial call
+    updateParallax();
+  }
+  
+  // Licensing section fade-in and number counting animations
+  const licensingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+        entry.target.classList.add('animated');
+        entry.target.classList.add('visible');
+        
+        // If it's a number, start counting animation
+        if (entry.target.classList.contains('licensing-number')) {
+          setTimeout(() => {
+            const target = parseFloat(entry.target.dataset.target);
+            const suffix = entry.target.dataset.suffix || '';
+            const duration = 1200; // 1.2 seconds
+            
+            const animateValue = (element, start, end, duration) => {
+              const startTime = performance.now();
+              
+              const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+              
+              const updateNumber = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeOutQuart(progress);
+                
+                const current = start + (end - start) * easedProgress;
+                
+                // Format the number with k suffix
+                if (end >= 1000) {
+                  const formatted = (Math.round(current / 1000)) + 'k';
+                  element.textContent = formatted + suffix;
+                } else {
+                  element.textContent = Math.round(current).toLocaleString() + suffix;
+                }
+                
+                if (progress < 1) {
+                  requestAnimationFrame(updateNumber);
+                }
+              };
+              
+              requestAnimationFrame(updateNumber);
+            };
+            
+            animateValue(entry.target, 0, target, duration);
+          }, 200); // Small delay after fade-in
+        }
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  // Observe licensing section elements
+  document.querySelectorAll('.licensing-fade-row').forEach(el => {
+    licensingObserver.observe(el);
+  });
+  
+  document.querySelectorAll('.licensing-number').forEach(el => {
+    licensingObserver.observe(el);
+  });
+});
+
+// Video Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.getElementById('video-carousel');
+  const videoItems = carousel.querySelectorAll('.video-item');
+  const prevButton = document.getElementById('video-prev');
+  const nextButton = document.getElementById('video-next');
+  
+  let currentIndex = 2; // Start with the middle video (index 2)
+  const totalVideos = videoItems.length;
+  
+  // Video positions configuration - horizontal centering with overlapping
+  const positions = [
+    { scale: 0.7, x: -380, y: 0, zIndex: 1 }, // Far left (smallest)
+    { scale: 0.85, x: -200, y: 0, zIndex: 2 }, // Left (small)
+    { scale: 1, x: 0, y: 0, zIndex: 5 }, // Center (biggest)
+    { scale: 0.85, x: 200, y: 0, zIndex: 2 }, // Right (small)
+    { scale: 0.7, x: 380, y: 0, zIndex: 1 } // Far right (smallest)
+  ];
+  
+  function updateCarousel() {
+    // Set container styles for proper centering
+    const container = carousel.querySelector('.video-container');
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'center';
+    
+    videoItems.forEach((item, index) => {
+      // Calculate position relative to current index
+      let relativePos = index - currentIndex + 2; // +2 to center the current item
+      
+      // Handle wrap-around for circular rotation
+      if (relativePos < 0) relativePos += totalVideos;
+      if (relativePos >= totalVideos) relativePos -= totalVideos;
+      
+      // Apply transformation if position exists
+      if (relativePos < positions.length) {
+        const pos = positions[relativePos];
+        item.style.position = 'absolute';
+        item.style.transform = `translateX(${pos.x}px) translateY(${pos.y}px) scale(${pos.scale})`;
+        item.style.zIndex = pos.zIndex;
+        item.style.opacity = '1'; // No transparency
+        item.style.transition = 'all 0.5s ease-in-out';
+        item.style.display = 'flex';
+        item.style.left = '50%';
+        item.style.top = '50%';
+        item.style.marginLeft = '-179.5px'; // Half of the largest width (359px)
+        item.style.marginTop = '-239.85px'; // Half of the largest height (479.69px)
+      } else {
+        // Hide items that are out of view
+        item.style.display = 'none';
+      }
+    });
+  }
+  
+  function rotateLeft() {
+    currentIndex = (currentIndex - 1 + totalVideos) % totalVideos;
+    updateCarousel();
+  }
+  
+  function rotateRight() {
+    currentIndex = (currentIndex + 1) % totalVideos;
+    updateCarousel();
+  }
+  
+  // Event listeners
+  prevButton.addEventListener('click', rotateLeft);
+  nextButton.addEventListener('click', rotateRight);
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') rotateLeft();
+    if (e.key === 'ArrowRight') rotateRight();
+  });
+  
+  // Touch/swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+  
+  carousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+  
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 50) rotateRight(); // Swipe left
+    if (touchEndX > touchStartX + 50) rotateLeft(); // Swipe right
+  }
+  
+  // Initialize carousel positions
+  updateCarousel();
 });
 </script>
 </body>
