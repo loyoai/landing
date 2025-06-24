@@ -7,15 +7,15 @@ tailwind.config =
       theme: {
         extend: {
           fontFamily: {
-            'h1-regular-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-text-xl-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-text-md-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-h1-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-h3-font-family': "IbmPlexSans-Regular, sans-serif",
-'h15-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-text-lg-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-h4-font-family': "IbmPlexSans-Regular, sans-serif",
-'regular-h2-font-family': "IbmPlexSans-Regular, sans-serif",
+            'h1-regular-font-family': "'IBM Plex Sans', sans-serif",
+'regular-text-xl-font-family': "'IBM Plex Sans', sans-serif",
+'regular-text-md-font-family': "'IBM Plex Sans', sans-serif",
+'regular-h1-font-family': "'IBM Plex Sans', sans-serif",
+'regular-h3-font-family': "'IBM Plex Sans', sans-serif",
+'h15-font-family': "'IBM Plex Sans', sans-serif",
+'regular-text-lg-font-family': "'IBM Plex Sans', sans-serif",
+'regular-h4-font-family': "'IBM Plex Sans', sans-serif",
+'regular-h2-font-family': "'IBM Plex Sans', sans-serif",
           },
           fontSize: {
             'h1-regular-font-size': "48px",

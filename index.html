@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./vars.css">
   <link rel="stylesheet" href="./style.css">
   <script src='https://cdn.tailwindcss.com/3.2.0' ></script>
   <script src="./tailwind.config.js"></script>
   <style>
+   * {
+       font-family: 'IBM Plex Sans', sans-serif !important;
+   }
+   
    a,
    button,
    input,
@@ -34,6 +41,79 @@
        margin: 0;
        padding: 0;
    }
+   
+   /* Horizontal scrolling for service cards */
+   .service-cards-container {
+       scrollbar-width: thin;
+       scrollbar-color: #d1d5db transparent;
+       -webkit-overflow-scrolling: touch;
+       scroll-behavior: smooth;
+   }
+   
+   .service-cards-container::-webkit-scrollbar {
+       height: 8px;
+   }
+   
+   .service-cards-container::-webkit-scrollbar-track {
+       background: transparent;
+   }
+   
+   .service-cards-container::-webkit-scrollbar-thumb {
+       background-color: #d1d5db;
+       border-radius: 4px;
+   }
+   
+   .service-cards-container::-webkit-scrollbar-thumb:hover {
+       background-color: #9ca3af;
+   }
+   
+   /* Subtle fade-in-up animation for impact numbers */
+   .impact-number {
+       opacity: 0;
+       transform: translateY(20px);
+       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+   }
+   
+   .impact-number.visible {
+       opacity: 1;
+       transform: translateY(0);
+   }
+   
+   /* Animation for floating cards */
+   .float-card {
+       transform: translate3d(0, 0, 0);
+       opacity: 1;
+       transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+       will-change: transform, opacity;
+       backface-visibility: hidden;
+   }
+   
+   .float-card.animate-left {
+       animation: slideLeft 10s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+   }
+   
+   .float-card.animate-right {
+       animation: slideRight 10s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+   }
+   
+   @keyframes slideLeft {
+       from { transform: translate3d(0, 0, 0); }
+       to { transform: translate3d(-40px, 0, 0); }
+   }
+   
+   @keyframes slideRight {
+       from { transform: translate3d(0, 0, 0); }
+       to { transform: translate3d(40px, 0, 0); }
+   }
+   
+   .float-card.fade-out {
+       opacity: 0;
+   }
+   
+   .float-card.transitioning {
+       animation: none !important;
+       transform: translate3d(0, 0, 0) !important;
+   }
    </style>
   <title>Document</title>
 </head>
@@ -42,13 +122,16 @@
     class="bg-[#ffffff] flex flex-col gap-0 items-start justify-start relative overflow-hidden"
   >
     <div
-      class="pr-20 pl-20 flex flex-col gap-[83px] items-start justify-start self-stretch shrink-0 h-[623px] relative"
-      style="
-        background: url(frame-19840782300.png) center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      "
+      id="hero-section"
+      class="relative self-stretch shrink-0 h-[623px] overflow-hidden"
     >
+      <div id="hero-backgrounds" class="absolute inset-0">
+        <div class="hero-bg absolute inset-0 transition-opacity duration-1000 opacity-100" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(frame-19840782300.png) center/cover no-repeat;"></div>
+        <div class="hero-bg absolute inset-0 transition-opacity duration-1000 opacity-0" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(background0.png) center/cover no-repeat;"></div>
+        <div class="hero-bg absolute inset-0 transition-opacity duration-1000 opacity-0" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(frame-19840783050.png) center/cover no-repeat;"></div>
+        <div class="hero-bg absolute inset-0 transition-opacity duration-1000 opacity-0" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(frame-19840783062.png) center/cover no-repeat;"></div>
+      </div>
+      <div class="pr-20 pl-20 flex flex-col gap-[83px] items-start justify-start relative z-10 h-full">
       <div
         class="pt-[156px] flex flex-col gap-2.5 items-start justify-start shrink-0 relative"
       >
@@ -56,14 +139,16 @@
           class="flex flex-col gap-[18px] items-start justify-start shrink-0 w-[583px] h-[293px] relative"
         >
           <div
-            class="text-text-alternate text-left font-h1-regular-font-family text-h1-regular-font-size leading-h1-regular-line-height font-h1-regular-font-weight relative w-[100%] max-w-[600px]"
+            id="hero-title"
+            class="text-text-alternate text-left font-h1-regular-font-family text-h1-regular-font-size leading-h1-regular-line-height font-h1-regular-font-weight relative w-[100%] max-w-[600px] transition-opacity duration-500"
           >
             We Are Pioneering Waste Management Practices
             <br />
             In Saudi Arabia
           </div>
           <div
-            class="text-text-alternate text-left font-regular-text-xl-font-family text-regular-text-xl-font-size leading-regular-text-xl-line-height font-regular-text-xl-font-weight absolute left-0 top-[189px] w-[533px]"
+            id="hero-subtitle"
+            class="text-text-alternate text-left font-regular-text-xl-font-family text-regular-text-xl-font-size leading-regular-text-xl-line-height font-regular-text-xl-font-weight absolute left-0 top-[189px] w-[533px] transition-opacity duration-500"
           >
             MWAN is committed to advancing sustainable development and
             establishing a universal standard in waste management across the
@@ -72,13 +157,15 @@
         </div>
       </div>
       <div
+        id="hero-tabs"
         class="flex flex-row gap-[22px] items-center justify-start self-stretch shrink-0 relative"
       >
         <div
-          class="flex flex-col gap-3 items-start justify-start shrink-0 w-[140px] relative"
+          class="tab-item flex flex-col gap-3 items-start justify-start shrink-0 w-[140px] relative cursor-pointer active"
+          data-tab="0"
         >
           <div
-            class="text-[#ffffff] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px]"
+            class="tab-text text-[#ffffff] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px] transition-opacity duration-300"
           >
             About MWAN
           </div>
@@ -86,46 +173,66 @@
             class="bg-[rgba(255,255,255,0.20)] rounded-[200px] self-stretch shrink-0 h-[3px] relative overflow-hidden"
           >
             <div
-              class="bg-[#ffffff] rounded-[100px] w-[140px] h-[3px] absolute left-0 top-0"
+              class="progress-bar bg-[#ffffff] rounded-[100px] h-[3px] absolute left-0 top-0 transition-all duration-300"
+              style="width: 0%;"
             ></div>
           </div>
         </div>
         <div
-          class="flex flex-col gap-3 items-start justify-start shrink-0 w-[225px] relative"
+          class="tab-item flex flex-col gap-3 items-start justify-start shrink-0 w-[225px] relative cursor-pointer"
+          data-tab="1"
         >
           <div
-            class="text-[rgba(255,255,255,0.60)] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px]"
+            class="tab-text text-[rgba(255,255,255,0.60)] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px] transition-opacity duration-300"
           >
             Learn More About Investment
           </div>
           <div
             class="bg-[rgba(255,255,255,0.20)] rounded-[200px] self-stretch shrink-0 h-[3px] relative overflow-hidden"
-          ></div>
+          >
+            <div
+              class="progress-bar bg-[#ffffff] rounded-[100px] h-[3px] absolute left-0 top-0 transition-all duration-300"
+              style="width: 0%;"
+            ></div>
+          </div>
         </div>
         <div
-          class="flex flex-col gap-3 items-start justify-start shrink-0 w-[254px] relative"
+          class="tab-item flex flex-col gap-3 items-start justify-start shrink-0 w-[254px] relative cursor-pointer"
+          data-tab="2"
         >
           <div
-            class="text-[rgba(255,255,255,0.60)] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px]"
+            class="tab-text text-[rgba(255,255,255,0.60)] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px] transition-opacity duration-300"
           >
             Find Out About Licensing &amp; Permits
           </div>
           <div
             class="bg-[rgba(255,255,255,0.20)] rounded-[200px] self-stretch shrink-0 h-[3px] relative overflow-hidden"
-          ></div>
+          >
+            <div
+              class="progress-bar bg-[#ffffff] rounded-[100px] h-[3px] absolute left-0 top-0 transition-all duration-300"
+              style="width: 0%;"
+            ></div>
+          </div>
         </div>
         <div
-          class="flex flex-col gap-3 items-start justify-start shrink-0 w-[254px] relative"
+          class="tab-item flex flex-col gap-3 items-start justify-start shrink-0 w-[254px] relative cursor-pointer"
+          data-tab="3"
         >
           <div
-            class="text-[rgba(255,255,255,0.60)] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px]"
+            class="tab-text text-[rgba(255,255,255,0.60)] text-left font-regular-text-md-font-family text-regular-text-md-font-size leading-regular-text-md-line-height font-regular-text-md-font-weight relative self-stretch h-[19px] transition-opacity duration-300"
           >
             Latest News - IFAT 2026
           </div>
           <div
             class="bg-[rgba(255,255,255,0.20)] rounded-[200px] self-stretch shrink-0 h-[3px] relative overflow-hidden"
-          ></div>
+          >
+            <div
+              class="progress-bar bg-[#ffffff] rounded-[100px] h-[3px] absolute left-0 top-0 transition-all duration-300"
+              style="width: 0%;"
+            ></div>
+          </div>
         </div>
+      </div>
       </div>
     </div>
     <img
@@ -166,20 +273,21 @@
             <div
               class="flex flex-row gap-0 items-center justify-start self-stretch flex-1 relative overflow-hidden"
             >
-              <div
-                class="text-[#939393] text-left font-['IbmPlexSans-Regular',_sans-serif] text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-normal relative"
-              >
-                What are you looking for?
-              </div>
+              <input
+                type="text"
+                id="serviceSearch"
+                placeholder="What are you looking for?"
+                class="text-[#000000] placeholder:text-[#939393] text-left text-size-text-typo-size-text-md leading-line-height-text-line-heights-text-md font-normal relative w-full outline-none bg-transparent"
+              />
             </div>
           </div>
         </div>
       </div>
       <div
-        class="pl-20 flex flex-row gap-[22px] items-start justify-start self-stretch shrink-0 h-[506px] relative overflow-hidden"
+        class="service-cards-container flex flex-row gap-[22px] items-start justify-start w-full shrink-0 h-[506px] relative overflow-x-auto overflow-y-hidden flex-nowrap"
       >
         <div
-          class="bg-[#ffffff] rounded-2xl p-7 flex flex-col items-start justify-between shrink-0 w-[329px] h-[463px] relative"
+          class="bg-[#ffffff] rounded-2xl p-7 flex flex-col items-start justify-between shrink-0 w-[329px] h-[463px] relative ml-20"
           style="box-shadow: 0px 11px 24px 0px rgba(0, 0, 0, 0.06)"
         >
           <div
@@ -362,6 +470,7 @@
         </div>
         <div
           class="bg-[#ffffff] rounded-2xl p-7 flex flex-col items-start justify-between shrink-0 w-[329px] h-[463px] relative"
+          style="box-shadow: 0px 11px 24px 0px rgba(0, 0, 0, 0.06)"
         >
           <div
             class="flex flex-col gap-4 items-start justify-start self-stretch shrink-0 relative"
@@ -440,9 +549,10 @@
           class="flex flex-col gap-0 items-center justify-start w-[193px] absolute left-40 top-[1843px]"
         >
           <div
-            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center"
+            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center impact-number whitespace-nowrap"
+            data-target="-37" data-suffix="M Tons"
           >
-            -37M Tons
+            0M Tons
           </div>
           <div
             class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
@@ -454,60 +564,65 @@
           class="flex flex-col gap-0 items-center justify-start w-[193px] absolute left-[595px] top-[1776px]"
         >
           <div
-            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center"
+            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center impact-number whitespace-nowrap"
+            data-target="650" data-suffix="B SAR"
           >
-            -37M Tons
+            0B SAR
           </div>
           <div
             class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
           >
-            CO₂e Avoided
+            GDP Contribution
           </div>
         </div>
         <div
           class="flex flex-col gap-0 items-center justify-start w-[193px] absolute left-[1106px] top-[1843px]"
         >
           <div
-            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center"
+            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center impact-number whitespace-nowrap"
+            data-target="76000" data-suffix="+"
           >
-            -37M Tons
+            0+
           </div>
           <div
             class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
           >
-            CO₂e Avoided
+            Jobs Created
           </div>
         </div>
         <div
           class="flex flex-col gap-0 items-center justify-start w-[193px] absolute left-[1076px] top-[2467px]"
         >
           <div
-            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center"
+            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center impact-number whitespace-nowrap"
+            data-target="848" data-suffix="+"
           >
-            -37M Tons
+            0+
           </div>
           <div
             class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
           >
-            CO₂e Avoided
+            Facilities Nationwide
           </div>
         </div>
         <div
           class="flex flex-col gap-0 items-center justify-start w-[193px] absolute left-40 top-[2500px]"
         >
           <div
-            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center"
+            class="text-text-primary text-center font-['IbmPlexSans-Medium',_sans-serif] text-[40px] leading-normal font-medium relative self-stretch flex items-center justify-center impact-number whitespace-nowrap"
+            data-target="1.2" data-suffix="B Tons" data-decimals="1"
           >
-            -37M Tons
+            0B Tons
           </div>
           <div
             class="text-text-regular text-center font-regular-h4-font-family text-regular-h4-font-size leading-regular-h4-line-height font-regular-h4-font-weight relative self-stretch"
           >
-            CO₂e Avoided
+            Waste Processed
           </div>
         </div>
         <div
-          class="rounded-lg p-4 flex flex-col gap-4 items-start justify-start w-[234.61px] absolute left-[835px] top-[1926px]"
+          id="card1"
+          class="rounded-lg p-4 flex flex-col gap-4 items-start justify-start w-[234.61px] absolute left-[835px] top-[1926px] float-card"
           style="
             background: linear-gradient(
               207.48deg,
@@ -535,7 +650,8 @@
           />
         </div>
         <div
-          class="rounded-lg p-4 flex flex-col gap-4 items-start justify-start w-[234.61px] absolute left-[340px] top-[2205px]"
+          id="card2"
+          class="rounded-lg p-4 flex flex-col gap-4 items-start justify-start w-[234.61px] absolute left-[340px] top-[2205px] float-card"
           style="
             background: linear-gradient(
               207.48deg,
@@ -563,7 +679,8 @@
           />
         </div>
         <div
-          class="rounded-lg p-4 flex flex-col gap-4 items-start justify-start w-[234.61px] absolute left-[786px] top-[2393px]"
+          id="card3"
+          class="rounded-lg p-4 flex flex-col gap-4 items-start justify-start w-[234.61px] absolute left-[786px] top-[2393px] float-card"
           style="
             background: linear-gradient(
               207.48deg,
@@ -1823,5 +1940,383 @@
     </div>
   </div>
   
+  <script>
+    // Tab content data
+    const tabData = [
+      {
+        title: "We Are Pioneering Waste Management Practices<br />In Saudi Arabia",
+        subtitle: "MWAN is committed to advancing sustainable development and establishing a universal standard in waste management across the Kingdom"
+      },
+      {
+        title: "Invest in Saudi Arabia's<br />Sustainable Future",
+        subtitle: "Discover lucrative investment opportunities in waste management and contribute to the Kingdom's Vision 2030"
+      },
+      {
+        title: "Streamlined Licensing<br />& Permit Services",
+        subtitle: "Get your waste management licenses and permits quickly through our efficient digital platform"
+      },
+      {
+        title: "IFAT 2026:<br />Shaping Tomorrow's Environment",
+        subtitle: "Join us at the world's leading trade fair for environmental technologies in Munich"
+      }
+    ];
+
+    let currentTab = 0;
+    let interval;
+
+    const heroTitle = document.getElementById('hero-title');
+    const heroSubtitle = document.getElementById('hero-subtitle');
+    const tabItems = document.querySelectorAll('.tab-item');
+    const heroBgs = document.querySelectorAll('.hero-bg');
+
+    function switchTab(index) {
+      // Reset all tabs and backgrounds
+      tabItems.forEach((tab, i) => {
+        tab.classList.remove('active');
+        const progressBar = tab.querySelector('.progress-bar');
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+      });
+
+      heroBgs.forEach((bg, i) => {
+        bg.style.opacity = i === index ? '1' : '0';
+      });
+
+      // Activate current tab
+      currentTab = index;
+      const activeTab = tabItems[index];
+      activeTab.classList.add('active');
+
+      // Animate progress bar with simple transition
+      const progressBar = activeTab.querySelector('.progress-bar');
+      setTimeout(() => {
+        progressBar.style.transition = 'width 5s linear';
+        progressBar.style.width = '100%';
+      }, 50);
+
+      // Fade out content
+      heroTitle.style.opacity = '0';
+      heroSubtitle.style.opacity = '0';
+
+      // Change content after fade out
+      setTimeout(() => {
+        heroTitle.innerHTML = tabData[index].title;
+        heroSubtitle.innerHTML = tabData[index].subtitle;
+        
+        // Fade in new content
+        requestAnimationFrame(() => {
+          heroTitle.style.opacity = '1';
+          heroSubtitle.style.opacity = '1';
+        });
+      }, 300);
+    }
+
+    function startAutoSwitch() {
+      if (interval) {
+        clearInterval(interval);
+      }
+      interval = setInterval(() => {
+        const nextTab = (currentTab + 1) % tabData.length;
+        switchTab(nextTab);
+      }, 5000);
+    }
+
+    function stopAutoSwitch() {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+    }
+
+    // Add click handlers to tabs
+    tabItems.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        stopAutoSwitch();
+        switchTab(index);
+        // Restart auto-switch after user interaction
+        startAutoSwitch();
+      });
+    });
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize first tab
+      switchTab(0);
+      
+      // Start auto-switch
+      startAutoSwitch();
+    });
+  </script>
+<script>
+// Service card filtering functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('serviceSearch');
+  const serviceCards = document.querySelectorAll('.service-card');
+  
+  // Add service-card class to all cards for easier selection
+  const cardsContainer = document.querySelector('.service-cards-container');
+  if (cardsContainer) {
+    const cards = cardsContainer.children;
+    Array.from(cards).forEach(card => {
+      if (card.classList.contains('bg-[#ffffff]')) {
+        card.classList.add('service-card');
+      }
+    });
+  }
+  
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase().trim();
+    
+    document.querySelectorAll('.service-card').forEach(card => {
+      const cardText = card.textContent.toLowerCase();
+      
+      if (searchTerm === '' || cardText.includes(searchTerm)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    // Check if any cards are visible
+    const visibleCards = Array.from(document.querySelectorAll('.service-card')).filter(
+      card => card.style.display !== 'none'
+    );
+    
+    // Remove ml-20 class from all cards first
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.classList.remove('ml-20');
+    });
+    
+    // Add ml-20 class to the first visible card
+    if (visibleCards.length > 0) {
+      visibleCards[0].classList.add('ml-20');
+    }
+    
+    // If no cards match, show a message
+    let noResultsMsg = document.getElementById('noResultsMessage');
+    if (visibleCards.length === 0 && searchTerm !== '') {
+      if (!noResultsMsg) {
+        noResultsMsg = document.createElement('div');
+        noResultsMsg.id = 'noResultsMessage';
+        noResultsMsg.className = 'text-[#686868] text-center p-8 w-full ml-20';
+        noResultsMsg.textContent = 'No services found matching your search.';
+        cardsContainer.appendChild(noResultsMsg);
+      }
+      noResultsMsg.style.display = 'block';
+    } else if (noResultsMsg) {
+      noResultsMsg.style.display = 'none';
+    }
+  });
+});
+
+// Impact numbers count-up animation
+document.addEventListener('DOMContentLoaded', function() {
+  const animateValue = (element, start, end, duration, decimals = 0) => {
+    const prefix = element.dataset.prefix || '';
+    const suffix = element.dataset.suffix || '';
+    const startTime = performance.now();
+    
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+    
+    const updateNumber = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutQuart(progress);
+      
+      const current = start + (end - start) * easedProgress;
+      
+      if (decimals > 0) {
+        element.textContent = prefix + current.toFixed(decimals) + suffix;
+      } else {
+        element.textContent = prefix + Math.round(current).toLocaleString() + suffix;
+      }
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateNumber);
+      } else {
+        // Final value to ensure accuracy
+        if (decimals > 0) {
+          element.textContent = prefix + end.toFixed(decimals) + suffix;
+        } else {
+          element.textContent = prefix + Math.round(end).toLocaleString() + suffix;
+        }
+      }
+    };
+    
+    requestAnimationFrame(updateNumber);
+  };
+  
+  // Set up Intersection Observer
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.3
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+        entry.target.classList.add('animated');
+        entry.target.classList.add('visible');
+        
+        // Start count animation after fade-in begins
+        setTimeout(() => {
+          const target = parseFloat(entry.target.dataset.target);
+          const decimals = parseInt(entry.target.dataset.decimals) || 0;
+          const duration = 1200; // 1.2 seconds
+          
+          animateValue(entry.target, 0, target, duration, decimals);
+        }, 200); // Small delay for smooth transition
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all impact numbers
+  document.querySelectorAll('.impact-number').forEach(element => {
+    observer.observe(element);
+  });
+});
+
+// Floating cards transition animation
+document.addEventListener('DOMContentLoaded', function() {
+  const cardContents = [
+    {
+      title: "Engineering Cells Inspected for Hajj Waste Safety",
+      image: "image0.png"
+    },
+    {
+      title: "Executive Joint Tree Planting for Sustainability",
+      image: "image1.png"
+    },
+    {
+      title: "Advanced Strategy for Sustainable Management",
+      image: "image2.png"
+    }
+  ];
+  
+  const alternateContents = [
+    {
+      title: "Innovative Waste Reduction Technologies Deployed",
+      image: "image0.png"
+    },
+    {
+      title: "Community Recycling Programs Expanded",
+      image: "image1.png"
+    },
+    {
+      title: "Smart Waste Collection Systems Implemented",
+      image: "image2.png"
+    }
+  ];
+  
+  let currentSet = 0;
+  let animationStarted = false;
+  let transitionInterval = null;
+  
+  function startAnimation() {
+    // Add animation classes
+    const card1 = document.getElementById('card1');
+    const card2 = document.getElementById('card2');
+    const card3 = document.getElementById('card3');
+    
+    if (card1) card1.classList.add('animate-left');
+    if (card2) card2.classList.add('animate-right');
+    if (card3) card3.classList.add('animate-left');
+  }
+  
+  function transitionCards() {
+    const cards = [
+      { id: 'card1', direction: 'animate-left' },
+      { id: 'card2', direction: 'animate-right' },
+      { id: 'card3', direction: 'animate-left' }
+    ];
+    const contents = currentSet === 0 ? alternateContents : cardContents;
+    
+    // First, add transitioning class to stop animation
+    cards.forEach(({ id }) => {
+      const card = document.getElementById(id);
+      if (card) {
+        card.classList.add('transitioning');
+        card.classList.remove('animate-left', 'animate-right');
+      }
+    });
+    
+    // Small delay to ensure animation has stopped
+    requestAnimationFrame(() => {
+      // Fade out cards
+      cards.forEach(({ id }) => {
+        const card = document.getElementById(id);
+        if (card) {
+          card.classList.add('fade-out');
+        }
+      });
+      
+      // After fade out, change content
+      setTimeout(() => {
+        cards.forEach(({ id }, index) => {
+          const card = document.getElementById(id);
+          if (card) {
+            const titleElement = card.querySelector('.text-\\[\\#000000\\]');
+            const imageElement = card.querySelector('img');
+            
+            if (titleElement) {
+              titleElement.textContent = contents[index].title;
+            }
+            if (imageElement) {
+              // Preload new image before showing
+              const newImage = new Image();
+              newImage.onload = () => {
+                imageElement.src = contents[index].image;
+              };
+              newImage.src = contents[index].image;
+            }
+          }
+        });
+        
+        // Fade in with new content
+        setTimeout(() => {
+          cards.forEach(({ id, direction }) => {
+            const card = document.getElementById(id);
+            if (card) {
+              card.classList.remove('fade-out', 'transitioning');
+              
+              // Start animation after fade in completes
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  card.classList.add(direction);
+                });
+              });
+            }
+          });
+        }, 100);
+        
+        currentSet = currentSet === 0 ? 1 : 0;
+      }, 800);
+    });
+  }
+  
+  // Set up Intersection Observer for the impact section
+  const impactObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animationStarted) {
+        animationStarted = true;
+        startAnimation();
+        
+        // Start transition cycle after 10 seconds
+        setTimeout(() => {
+          transitionCards();
+          transitionInterval = setInterval(transitionCards, 10000);
+        }, 10000);
+      }
+    });
+  }, { threshold: 0.3 });
+  
+  // Observe the first card to trigger animation
+  const firstCard = document.getElementById('card1');
+  if (firstCard) {
+    impactObserver.observe(firstCard);
+  }
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,93 @@
+/* Global font styles */
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* Font variable classes */
+.font-h15-font-family,
+.font-regular-h1-font-family,
+.font-regular-h2-font-family,
+.font-regular-h3-font-family,
+.font-regular-h4-font-family,
+.font-regular-text-xl-font-family,
+.font-regular-text-lg-font-family,
+.font-regular-text-md-font-family,
+.font-regular-text-sm-font-family,
+.font-regular-text-xs-font-family,
+.font-semi-bold-text-lg-font-family,
+.font-semi-bold-text-md-font-family,
+.font-semi-bold-text-sm-font-family,
+.font-semi-bold-text-xs-font-family {
+  font-family: var(--regular-h1-font-family);
+}
+
+/* Font size classes */
+.text-h15-font-size { font-size: var(--h15-font-size); }
+.text-regular-h1-font-size { font-size: var(--regular-h1-font-size); }
+.text-regular-h2-font-size { font-size: var(--regular-h2-font-size); }
+.text-regular-h3-font-size { font-size: var(--regular-h3-font-size); }
+.text-regular-h4-font-size { font-size: var(--regular-h4-font-size); }
+.text-regular-text-xl-font-size { font-size: var(--regular-text-xl-font-size); }
+.text-regular-text-lg-font-size { font-size: var(--regular-text-lg-font-size); }
+.text-regular-text-md-font-size { font-size: var(--regular-text-md-font-size); }
+.text-regular-text-sm-font-size { font-size: var(--regular-text-sm-font-size); }
+.text-regular-text-xs-font-size { font-size: var(--regular-text-xs-font-size); }
+.text-semi-bold-text-lg-font-size { font-size: var(--semi-bold-text-lg-font-size); }
+.text-semi-bold-text-md-font-size { font-size: var(--semi-bold-text-md-font-size); }
+.text-semi-bold-text-sm-font-size { font-size: var(--semi-bold-text-sm-font-size); }
+.text-semi-bold-text-xs-font-size { font-size: var(--semi-bold-text-xs-font-size); }
+
+/* Line height classes */
+.leading-h15-line-height { line-height: var(--h15-line-height); }
+.leading-regular-h1-line-height { line-height: var(--regular-h1-line-height); }
+.leading-regular-h2-line-height { line-height: var(--regular-h2-line-height); }
+.leading-regular-h3-line-height { line-height: var(--regular-h3-line-height); }
+.leading-regular-h4-line-height { line-height: var(--regular-h4-line-height); }
+.leading-regular-text-xl-line-height { line-height: var(--regular-text-xl-line-height); }
+.leading-regular-text-lg-line-height { line-height: var(--regular-text-lg-line-height); }
+.leading-regular-text-md-line-height { line-height: var(--regular-text-md-line-height); }
+.leading-regular-text-sm-line-height { line-height: var(--regular-text-sm-line-height); }
+.leading-regular-text-xs-line-height { line-height: var(--regular-text-xs-line-height); }
+.leading-semi-bold-text-lg-line-height { line-height: var(--semi-bold-text-lg-line-height); }
+.leading-semi-bold-text-md-line-height { line-height: var(--semi-bold-text-md-line-height); }
+.leading-semi-bold-text-sm-line-height { line-height: var(--semi-bold-text-sm-line-height); }
+.leading-semi-bold-text-xs-line-height { line-height: var(--semi-bold-text-xs-line-height); }
+
+/* Font weight classes */
+.font-h15-font-weight { font-weight: var(--h15-font-weight); }
+.font-regular-h1-font-weight { font-weight: var(--regular-h1-font-weight); }
+.font-regular-h2-font-weight { font-weight: var(--regular-h2-font-weight); }
+.font-regular-h3-font-weight { font-weight: var(--regular-h3-font-weight); }
+.font-regular-h4-font-weight { font-weight: var(--regular-h4-font-weight); }
+.font-regular-text-xl-font-weight { font-weight: var(--regular-text-xl-font-weight); }
+.font-regular-text-lg-font-weight { font-weight: var(--regular-text-lg-font-weight); }
+.font-regular-text-md-font-weight { font-weight: var(--regular-text-md-font-weight); }
+.font-regular-text-sm-font-weight { font-weight: var(--regular-text-sm-font-weight); }
+.font-regular-text-xs-font-weight { font-weight: var(--regular-text-xs-font-weight); }
+.font-semi-bold-text-lg-font-weight { font-weight: var(--semi-bold-text-lg-font-weight); }
+.font-semi-bold-text-md-font-weight { font-weight: var(--semi-bold-text-md-font-weight); }
+.font-semi-bold-text-sm-font-weight { font-weight: var(--semi-bold-text-sm-font-weight); }
+.font-semi-bold-text-xs-font-weight { font-weight: var(--semi-bold-text-xs-font-weight); }
+
+/* Color classes */
+.text-text-white { color: var(--text-white); }
+.text-text-primary { color: var(--text-primary); }
+.text-text-regular { color: var(--text-regular); }
+.text-text-alternate { color: #ffffff; }
+
+/* Tab animations */
+.tab-item {
+  transition: all 0.3s ease;
+}
+
+.tab-item.active .tab-text {
+  color: #ffffff !important;
+}
+
+.tab-item:not(.active) .tab-text {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.progress-bar {
+  transition: width 5s linear;
+}
